@@ -41,6 +41,11 @@ files.keys().forEach((item) => {
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "ATable",
+  components: {
+    // "com-function": () => import("../control/function"),
+    // "com-image": () => import("../control/image"),
+    ...modules,
+  },
   props: {
     column: {
       type: Array,
@@ -117,11 +122,7 @@ export default {
       ],
     };
   },
-  components: {
-    // "com-function": () => import("../control/function"),
-    // "com-image": () => import("../control/image"),
-    ...modules,
-  },
+
   beforeMount() {
     this.initRequest && this.getTableList();
   },
