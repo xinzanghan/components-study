@@ -1,25 +1,36 @@
 <template>
-    <el-form  ref="form" :model="field" :rules="rules" label-width="80px">
-        <template v-for="item in form_item">
-            <el-form-item 
-                
-                :key="item.prop" 
-                :label="item.label" 
-                :prop="item.prop"
-                :rules="item.rules"
-            >
-           <component :value.sync="field[item.prop]" :config="item"  :is="!item.type ? 'com-text' : `com-${item.type}`"/>
-        </el-form-item>
-        <!-- <el-form-item v-if="item.type==='select'"  :key="item.prop" :label="item.label" :prop="item.prop" :rules="item.rules">
+  <el-form ref="form" :model="field" :rules="rules" label-width="80px">
+    <template v-for="item in form_item">
+      <el-form-item
+        :key="item.prop"
+        :label="item.label"
+        :prop="item.prop"
+        :rules="item.rules"
+      >
+        <slot v-if="item.type === 'slot'" :name="item.slot_name"></slot>
+        <component
+          v-else
+          :value.sync="field[item.prop]"
+          :config="item"
+          :is="!item.type ? 'com-text' : `com-${item.type}`"
+        />
+      </el-form-item>
+      <!-- <el-form-item v-if="item.type==='select'"  :key="item.prop" :label="item.label" :prop="item.prop" :rules="item.rules">
             <el-select v-model="field[item.prop]"></el-select>
         </el-form-item> -->
-        </template>
+    </template>
 
-
-        <el-form-item>
-            <el-button v-for="item in button" :loading="item.loading" :key="item.key" :type="item.type" @click="handlerBtn(item)">{{item.label}}</el-button>
-        </el-form-item>
-    </el-form>
+    <el-form-item>
+      <el-button
+        v-for="item in button"
+        :loading="item.loading"
+        :key="item.key"
+        :type="item.type"
+        @click="handlerBtn(item)"
+        >{{ item.label }}</el-button
+      >
+    </el-form-item>
+  </el-form>
 </template>
 
 <script>
@@ -127,5 +138,4 @@ export default {
   },
 };
 </script>
-<style lang='less' scoped>
-</style>
+<style lang="less" scoped></style>

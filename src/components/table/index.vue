@@ -1,24 +1,50 @@
 <template>
-  <el-table :data="tableData" style="width: 100%" @selection-change="handleSelectionChange" @sort-change="sortChange">
-      <el-table-column v-if="checkBox" type="selection" width="55"></el-table-column>
-      <el-table-column v-if="index" type="index" width="50"></el-table-column>
-      <el-table-column v-for="item in column"  :sortable="item.sort" :sort-by="item.sort_by" :render-header="item.render_header" :key="item.prop" :prop="item.prop" :label="item.label" :width="item.width" >
-          <template slot-scope="scope">
-            <slot v-if="item.type==='slot'" :name="item.slot_name" :data1111="scope.row"></slot>
-            <component v-else :data="scope.row" :config="item" :prop="item.prop" :is="!item.type ? 'com-text' : `com-${item.type}`" />
-                <!-- <div v-html="item.callback&&item.callback(scope.row)"></div> -->
-          </template>
-      </el-table-column>
+  <el-table
+    :data="tableData"
+    style="width: 100%"
+    @selection-change="handleSelectionChange"
+    @sort-change="sortChange"
+  >
+    <el-table-column
+      v-if="checkBox"
+      type="selection"
+      width="55"
+    ></el-table-column>
+    <el-table-column v-if="index" type="index" width="50"></el-table-column>
+    <el-table-column
+      v-for="item in column"
+      :sortable="item.sort"
+      :sort-by="item.sort_by"
+      :render-header="item.render_header"
+      :key="item.prop"
+      :prop="item.prop"
+      :label="item.label"
+      :width="item.width"
+    >
+      <template slot-scope="scope">
+        <slot
+          v-if="item.type === 'slot'"
+          :name="item.slot_name"
+          :data1111="scope.row"
+        ></slot>
+        <component
+          v-else
+          :data="scope.row"
+          :config="item"
+          :prop="item.prop"
+          :is="!item.type ? 'com-text' : `com-${item.type}`"
+        />
+        <!-- <div v-html="item.callback&&item.callback(scope.row)"></div> -->
+      </template>
+    </el-table-column>
 
-      <!-- <el-table-column  v-if="item.type==='slot'"  :sortable="item.sort" :sort-by="item.sort_by"  :render-header="item.render_header" :key="item.prop" :prop="item.prop" :label="item.label" :width="item.width">
+    <!-- <el-table-column  v-if="item.type==='slot'"  :sortable="item.sort" :sort-by="item.sort_by"  :render-header="item.render_header" :key="item.prop" :prop="item.prop" :label="item.label" :width="item.width">
           <template slot-scope="scope">
               <slot :name="item.slot_name" :data1111="scope.row"></slot>
           </template>
       </el-table-column>
       <el-table-column v-else :key="item.prop"  :sortable="item.sort" :sort-by="item.sort_by"  :render-header="item.render_header" :prop="item.prop" :label="item.label" :width="item.width"></el-table-column> -->
-
-
-</el-table>
+  </el-table>
 </template>
 
 <script>
@@ -149,20 +175,20 @@ export default {
         console.log("请求地址不存在");
         return false;
       }
-      const requst_data = {
+      const request_data = {
         url: this.url,
         method: this.method,
       };
       // 转为字符串 来判读是否有值 若有值 则进行赋值，一般data/params只存在一个
       // 参数处理
       if (JSON.stringify(this.data) !== "{}") {
-        requst_data.data = this.data;
+        request_data.data = this.data;
       }
       if (JSON.stringify(this.params) !== "{}") {
-        requst_data.params = this.params;
+        request_data.params = this.params;
       }
       // 接口请求
-      this.$axios(requst_data).then((response) => {
+      this.$axios(request_data).then((response) => {
         let response_data = response.data.data;
         // 格式化数据
         if (this.format && typeof this.format === "function") {
@@ -184,5 +210,4 @@ export default {
   },
 };
 </script>
-<style lang='scss' scoped>
-</style>
+<style lang="scss" scoped></style>

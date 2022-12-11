@@ -63,7 +63,7 @@ export default {
         },
       ],
       form_field: {
-        name: "我是",
+        phone: "11111",
         sex: "",
       },
       form_button: [
